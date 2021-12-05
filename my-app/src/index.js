@@ -50,7 +50,8 @@ class Game extends React.Component {
                 }
             ],
             stepNumber: 0,
-            xIsNext: true
+            xIsNext: true,
+            isAscend: true
         };
     }
 
@@ -80,6 +81,12 @@ class Game extends React.Component {
             xIsNext: (step % 2) === 0
         });
     }
+    handleSort(){
+        this.setState({
+                isAscend: !this.state.isAscend
+            }
+        )
+    }
 
     render() {
         const history = this.state.history;
@@ -102,6 +109,14 @@ class Game extends React.Component {
             );
         });
 
+        let newMoves=[]
+        const isAscend=this.state.isAscend
+        if(isAscend===false){
+            for(let i=moves.length-1;i>=0;i--){
+                newMoves.push(moves[i])
+            }
+        }
+
         let status;
         if (winner) {
             status = "Winner: " + winner;
@@ -119,7 +134,10 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <ol>{isAscend===false ? newMoves : moves}</ol>
+                    <button onClick={() => this.handleSort()}>
+                        {this.state.isAscend===false ? 'Ascending': 'Descending'}
+                    </button>
                 </div>
             </div>
         );
