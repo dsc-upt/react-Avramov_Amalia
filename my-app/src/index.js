@@ -119,13 +119,21 @@ class Game extends React.Component {
             }
         }
 
+        const isDraw=current.squares.every((val) => (val != null))
+
         let status;
         if (winnerLine!=null) {
             status = "Winner: " + current.squares[winnerLine[0]] //+ " " + winnerLine[0]+ " " +winnerLine[1]+ " " + winnerLine[2];
-        } else {
-            status = "Next player: " + (this.state.xIsNext ? "X" : "O");
         }
-
+        else {
+            if(isDraw){
+                status= "It's a draw"
+            }
+        else
+            {
+                status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+            }
+        }
         return (
             <div className="game">
                 <div className="game-board">
